@@ -19,7 +19,11 @@ It routes requests by model ID, exposes a merged `/v1/models` list, and can opti
 
 ## Quick Start
 
-1. Copy and edit `router.yaml` for your local backends.
+1. Copy the example config and edit it for your local backends:
+
+```bash
+cp router.example.yaml router.yaml
+```
 2. Start the router:
 
 ```bash
@@ -34,7 +38,7 @@ curl http://127.0.0.1:8090/v1/models
 
 ## Configuration
 
-Configuration is loaded from `router.yaml` by default. Override path with:
+Configuration is loaded from `router.yaml` by default. The repository tracks `router.example.yaml` as the template, and `router.yaml` is local-only. Override path with:
 
 - `LLM_ROUTER_CONFIG=/path/to/router.yaml`
 
