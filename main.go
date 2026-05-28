@@ -66,7 +66,7 @@ func main() {
 	}
 
 	if err := syncPIModelContext(cfg.PIModelsJSONPath, cfg.Routes); err != nil {
-		log.Fatalf("pi model sync failed: %v", err)
+		log.Printf("warning: pi model sync skipped: %v", err)
 	}
 
 	r := &Router{
