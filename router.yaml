@@ -1,0 +1,25 @@
+listen_addr: "127.0.0.1:8090"
+pi_models_json_path: "~/.pi/agent/models.json"
+
+routes:
+  - id: "qwen3.6-27b-local"
+    backend_url: "http://127.0.0.1:8082"
+    context_window: 131072
+    model_file_path: "~/.cache/llama.cpp/models/qwen3.6-27b-local.gguf"
+    huggingface:
+      repo: "Qwen/Qwen3.6-27B-GGUF"
+      filename: "Qwen3.6-27B-Q4_K_M.gguf"
+      revision: "main"
+      token_env: "HF_TOKEN"
+      target_path: "~/.cache/llama.cpp/models/qwen3.6-27b-local.gguf"
+
+  - id: "qwen2.5-coder-7b-q5-local"
+    backend_url: "http://127.0.0.1:8083"
+    context_window: 131072
+    model_file_path: "~/.cache/llama.cpp/models/qwen2.5-coder-7b-q5-local.gguf"
+    huggingface:
+      repo: "Qwen/Qwen2.5-Coder-7B-Instruct-GGUF"
+      filename: "qwen2.5-coder-7b-instruct-q5_k_m.gguf"
+      revision: "main"
+      token_env: "HF_TOKEN"
+      target_path: "~/.cache/llama.cpp/models/qwen2.5-coder-7b-q5-local.gguf"
