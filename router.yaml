@@ -1,4 +1,5 @@
 listen_addr: "127.0.0.1:8090"
+enable_pi_model_sync: false
 pi_models_json_path: "~/.pi/agent/models.json"
 
 routes:

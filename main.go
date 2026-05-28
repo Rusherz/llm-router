@@ -22,6 +22,7 @@ import (
 
 type Config struct {
 	ListenAddr       string        `yaml:"listen_addr"`
+	EnablePISync     bool          `yaml:"enable_pi_model_sync"`
 	PIModelsJSONPath string        `yaml:"pi_models_json_path"`
 	Routes           []RouteConfig `yaml:"routes"`
 }
@@ -65,8 +66,10 @@ func main() {
 		log.Fatalf("config error: %v", err)
 	}
 
-	if err := syncPIModelContext(cfg.PIModelsJSONPath, cfg.Routes); err != nil {
-		log.Printf("warning: pi model sync skipped: %v", err)
+	if cfg.EnablePISync {
+		if err := syncPIModelContext(cfg.PIModelsJSONPath, cfg.Routes); err != nil {
+			log.Printf("warning: pi model sync skipped: %v", err)
+		}
 	}
 
 	r := &Router{
@@ -108,14 +111,16 @@ func loadConfig(path string) (Config, error) {
 		}
 		cfg.ListenAddr = "127.0.0.1:" + p
 	}
-	if cfg.PIModelsJSONPath == "" {
+	if cfg.EnablePISync && cfg.PIModelsJSONPath == "" {
 		cfg.PIModelsJSONPath = "~/.pi/agent/models.json"
 	}
-	p, err := expandPath(cfg.PIModelsJSONPath)
-	if err != nil {
-		return cfg, err
+	if cfg.PIModelsJSONPath != "" {
+		p, err := expandPath(cfg.PIModelsJSONPath)
+		if err != nil {
+			return cfg, err
+		}
+		cfg.PIModelsJSONPath = p
 	}
-	cfg.PIModelsJSONPath = p
 
 	if len(cfg.Routes) == 0 {
 		return cfg, errors.New("at least one route is required")
